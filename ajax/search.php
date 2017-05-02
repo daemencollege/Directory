@@ -70,7 +70,7 @@ if($rows){
 	
 	                    <li class="row"><label class="col-xs-3 control-label text-right">Mailbox:</label><span class="col-xs-9"><?php echo $rows[$i]['mailbox']; ?></span></li>
 	
-	                    <li class="row"><label class="col-xs-3 control-label text-right">Phone:</label><span class="col-xs-9">(555) <?php echo substr($rows[$i]['phone'],0,3). '-' . substr($rows[$i]['phone'],3); ?></span></li>
+	                    <li class="row"><label class="col-xs-3 control-label text-right">Phone:</label><a href="tel:1-555-555-5555" class="col-xs-9">(555) <?php echo substr($rows[$i]['phone'],0,3). '-' . substr($rows[$i]['phone'],3); ?></a></li>
 	
 	                    <li class="row"><label class="col-xs-3 control-label text-right">Email:</label><a href="mailto:" class="col-xs-9"><?php echo $rows[$i]['email'];?></a></li>
 	                  </ul>
