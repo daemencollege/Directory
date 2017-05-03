@@ -37,11 +37,10 @@ $query = "SELECT first_name, last_name, email, phone, office, mailbox FROM peopl
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
+    $query .= " ORDER BY last_name, first_name";
+    $rows = db_select($query);
 }
 
-$query .= " ORDER BY last_name, first_name";
-
-$rows = db_select($query);
 
 //echo '<pre>'.$query.'</pre>';
 

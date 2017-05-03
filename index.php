@@ -84,10 +84,12 @@
           <div class="col-sm-9">
             <select class="form-control" id="dept">
               <option value=''>All Departments</option>
-              <option value='offense'>Offense</option>
-              <option value='defense'>Defense</option>
-              <option value='tank'>Tank</option>
-              <option value='support'>Support</option>
+              <option value='biology'>Biology</option>
+              <option value='chemistry'>Chemistry</option>
+              <option value='computer science'>Computer Science</option>
+              <option value='math'>Math</option>
+              <option value='physics'>Physics</option>
+              <option value='zoology'>Zoology</option>
             </select>
           </div>
         </div>
@@ -97,8 +99,8 @@
 
           <div class="col-sm-10">
             <label class="radio-inline"><input type="radio" name="group" value="" checked="checked">All Matches</label>
-            <label class="radio-inline"><input type="radio" name="group" value="1">Original Members</label>
-            <label class="radio-inline"><input type="radio" name="group" value="0">Non-Members</label>
+            <label class="radio-inline"><input type="radio" name="group" value="1">Employees</label>
+            <label class="radio-inline"><input type="radio" name="group" value="0">Students</label>
           </div>
         </div>
       </form>
