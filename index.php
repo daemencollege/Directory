@@ -1,3 +1,4 @@
+<?php require('functions.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +71,7 @@
 
           <div class="col-sm-9">
             <div class="input-group">
-              <input type="search" class="form-control" id="search" placeholder="Search for...">
+              <input type="search" class="form-control" id="search">
               <span class="input-group-btn">
                 <button class="btn btn-primary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
               </span>
@@ -82,14 +83,12 @@
           <label class="control-label col-sm-2" for="dept">Department:</label>
 
           <div class="col-sm-9">
-            <select class="form-control" id="dept">
+          	<select class="form-control" id="dept">
               <option value=''>All Departments</option>
-              <option value='biology'>Biology</option>
-              <option value='chemistry'>Chemistry</option>
-              <option value='computer science'>Computer Science</option>
-              <option value='math'>Math</option>
-              <option value='physics'>Physics</option>
-              <option value='zoology'>Zoology</option>
+			  <?php $rows = get_departments(); 
+					foreach($rows as $row): ?>
+	          <option value="<?php echo $row['id']; ?>"><?php echo ucwords($row['name']); ?></option>
+			  <?php endforeach; ?>
             </select>
           </div>
         </div>
