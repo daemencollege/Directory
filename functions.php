@@ -8,9 +8,9 @@
 		return $rows;
 	}
 	
-	function in_department($person_id){
+	function in_departments($person_id){
     	$link = db_connect();
-    	$query = "SELECT name FROM departments JOIN in_department ON id = department_id WHERE person_id = $person_id";
+    	$query = "SELECT name FROM departments JOIN in_department ON id = department_id WHERE person_id = $person_id ORDER BY name";
     	$rows = db_select($query);
     	return $rows;
 	}

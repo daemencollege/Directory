@@ -97,7 +97,7 @@
           <label class="control-label col-sm-2">Type:</label>
 
           <div class="col-sm-10">
-            <label class="radio-inline"><input type="radio" name="group" value="" checked="checked">All Matches</label>
+            <label class="radio-inline"><input type="radio" name="group" value="" checked="checked">All</label>
             <label class="radio-inline"><input type="radio" name="group" value="1">Employees</label>
             <label class="radio-inline"><input type="radio" name="group" value="2">Students</label>
           </div>
