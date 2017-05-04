@@ -76,8 +76,8 @@ if($rows){
                 <tr>
                     <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$image; ?>"></td>
                     <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?></td>
-                    <td class="hidden-xs"><?php echo $rows[$i]['email']; ?></td>
-                    <td class="hidden-xs"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></td>
+                    <td class="hidden-xs"><a href="mailto:"><?php echo $rows[$i]['email']; ?></a></td>
+                    <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></a></td>
                     <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
                     <td><button type="button" class="btn btn-primary btn-sm">View</button></td>
                 </tr>
