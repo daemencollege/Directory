@@ -122,7 +122,7 @@ if($rows){
     
                 <div class="panel-footer">
                     <?php 
-                        $dept_rows = in_department($rows[$i]['id']);
+                        $dept_rows = in_departments($rows[$i]['id']);
                         foreach($dept_rows as $dept_row):
                     ?>
                     <span class="label label-primary"><?php echo ucwords($dept_row['name']); ?></span>
