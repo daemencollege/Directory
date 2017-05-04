@@ -10,10 +10,10 @@ $rows = "";
 
 $search = trim($_POST['search']);
 
-if($search !== ''){
-	$search = preg_replace('/\s\s+/', '|', $search);
+if($search){
+	$search = preg_replace('/\s+/', '|', $search);
 	$search = db_quote($search);
-	$sql[] = "last_name REGEXP $search OR first_name REGEXP $search OR email REGEXP $search OR phone REGEXP $search";
+	$sql[] = "(last_name REGEXP $search OR first_name REGEXP $search OR email REGEXP $search OR phone REGEXP $search)";
 }
 
 if($_POST['dept']){
@@ -21,13 +21,13 @@ if($_POST['dept']){
 	$sql[] = "department_id = $dept";
 }
 
-/*
-if($_POST['group'] != ''){
-	$group = intval($_POST['group']);
-	$sql[] = "group_num = $group";
-}*/
 
-if($_POST['page']){
+if($_POST['group']){
+	$group = intval($_POST['group']);
+	$sql[] = "group_id = $group";
+}
+
+if(isset($_POST['page'])){
 	$curr_page = intval($_POST['page']);
 	$offset = ($curr_page - 1) * $num_per_page;
 } else {
@@ -35,7 +35,7 @@ if($_POST['page']){
 	$offset = 0;
 }
 
-$query = "SELECT people.id, first_name, last_name, email, phone, office, mailbox FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);

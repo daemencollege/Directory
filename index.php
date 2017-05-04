@@ -54,7 +54,7 @@
     
     //Get results
     function search() {
-	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val()});
+	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': 1});
     }
     
   </script>
@@ -99,7 +99,7 @@
           <div class="col-sm-10">
             <label class="radio-inline"><input type="radio" name="group" value="" checked="checked">All Matches</label>
             <label class="radio-inline"><input type="radio" name="group" value="1">Employees</label>
-            <label class="radio-inline"><input type="radio" name="group" value="0">Students</label>
+            <label class="radio-inline"><input type="radio" name="group" value="2">Students</label>
           </div>
         </div>
       </form>
