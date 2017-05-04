@@ -35,7 +35,7 @@ if(isset($_POST['page'])){
 	$offset = 0;
 }
 
-$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
@@ -52,10 +52,10 @@ if($rows){
 	$page_end = min($offset + $num_per_page, count($rows));
 	
 	for($i = $offset; $i < $page_end; $i++) {
-		//$panel_type = $row['group_num'] == 1 ? 'panel-primary' : 'panel-info';
+		$panel_type = $rows[$i]['group_id'] == 1 ? 'panel-primary' : 'panel-info';
 ?>
 		<div class="col-xs-12 col-sm-6">
-	        <div class="panel panel-primary">
+	        <div class="panel <?php echo $panel_type; ?>">
                 <div class="panel-heading"><h3 class="panel-title"><?php echo $rows[$i]['first_name'] . ' ' . $rows[$i]['last_name']; ?></h3></div>
 	
                 <div class="panel-body">
