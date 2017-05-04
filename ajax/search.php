@@ -35,7 +35,7 @@ if(isset($_POST['page'])){
 	$offset = 0;
 }
 
-$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
@@ -51,8 +51,8 @@ if($rows){
 	$total_pages = ceil(count($rows) / $num_per_page);
 	$page_end = min($offset + $num_per_page, count($rows));
 	
-	for($i = $offset; $i < $page_end; $i++) {
-		//$panel_type = $row['group_num'] == 1 ? 'panel-primary' : 'panel-info';
+	for($i = $offset; $i < $page_end; $i++):
+		if ($rows[$i]['group_id'] == 1):
 ?>
 		<div class="col-xs-12 col-sm-6">
 	        <div class="panel panel-primary">
@@ -83,9 +83,9 @@ if($rows){
                     </div>
                     <div class="text-center">
                         <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
-                            <label class="btn btn-primary active"><input name="options-1" type="radio" value="work" checked> <span>Work</span></label>
-                            <label class="btn btn-primary"><input name="options-1" type="radio" value="home"> <span>Home</span></label>
-                            <label class="btn btn-danger"><input name="options-1" type="radio" value="emergency"> <span class="hidden-xs">Emergency</span></label>
+                            <label class="btn btn-primary active"><input name="options-1" type="radio" value="work" checked><span>Work</span></label>
+                            <label class="btn btn-primary"><input name="options-1" type="radio" value="home"><span>Home</span></label>
+                            <label class="btn btn-danger"><input name="options-1" type="radio" value="emergency"><span class="hidden-sm hidden-md hidden-lg"><i class="fa fa-medkit"></i></span><span class="hidden-xs">Emergency</span></label>
                         </div>
                     </div>
                 </div>
@@ -100,10 +100,43 @@ if($rows){
                 </div>
             </div>
         </div>
-      
-      
-<?php	
-	}
+<?php   else: ?>
+        
+        <div class="col-xs-12 col-sm-6">
+	        <div class="panel panel-info">
+                <div class="panel-heading"><h3 class="panel-title"><?php echo $rows[$i]['first_name'] . ' ' . $rows[$i]['last_name']; ?></h3></div>
+	
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4 col-md-3 col-md-offset-0"><img class="img-responsive img-rounded" src="icons/soldier76.png"></div>
+    
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="work">
+                                <ul class="list-unstyled" style="margin-bottom: 0;">
+                                    <li class="row"><label class="col-xs-3 control-label text-right">Email:</label><a href="mailto:" class="col-xs-9"><?php echo $rows[$i]['email'];?></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="panel-footer">
+                    <?php 
+                        $dept_rows = in_department($rows[$i]['id']);
+                        foreach($dept_rows as $dept_row):
+                    ?>
+                    <span class="label label-primary"><?php echo ucwords($dept_row['name']); ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+<?php   if($i % 2 !== 0): ?>
+        <div class="clearfix"></div>
+        
+<?php   
+        endif;
+    endif; 
+	endfor;
 ?>
 	<nav class="col-sm-offset-3 col-sm-6 text-center">
 		<ul class="pagination">
