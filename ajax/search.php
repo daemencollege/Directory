@@ -49,6 +49,7 @@ if (!empty($sql)) {
 if($rows){
 	$total_pages = ceil(count($rows) / $num_per_page);
 	$page_end = min($offset + $num_per_page, count($rows));
+	$images = array_diff(scandir('../icons/'), array('..','.'));
 ?>
         <table class="table table-striped">
             <thead>
@@ -64,6 +65,7 @@ if($rows){
             <tbody>   
 <?php
 	for($i = $offset; $i < $page_end; $i++):
+	    $image = $images[array_rand($images)];
 	    $dept_rows = in_departments($rows[$i]['id']);
 	    $dept_names = array();
         foreach($dept_rows as $dept_row){
@@ -72,7 +74,7 @@ if($rows){
         $dept_names = implode(', ', $dept_names);
 ?>
                 <tr>
-                    <td class="hidden-xs"><img class="img-responsive img-rounded" src="icons/soldier76.png"></td>
+                    <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$image; ?>"></td>
                     <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?></td>
                     <td class="hidden-xs"><?php echo $rows[$i]['email']; ?></td>
                     <td class="hidden-xs"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></td>
