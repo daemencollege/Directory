@@ -1,31 +1,33 @@
 <?php
-require '../connect.php';	
+require '../functions.php';	
 
 $link = db_connect();
 
 //Variables
 $num_per_page = 10;
 $adjacents = 2;
+$rows = "";
 
 $search = trim($_POST['search']);
 
-if($search !== ''){
-	$search = preg_replace('/\s\s+/', '|', $search);
+if($search){
+	$search = preg_replace('/\s+/', '|', $search);
 	$search = db_quote($search);
-	$sql[] = "last_name REGEXP $search OR first_name REGEXP $search OR email REGEXP $search OR phone REGEXP $search";
+	$sql[] = "(last_name REGEXP $search OR first_name REGEXP $search OR email REGEXP $search OR phone REGEXP $search)";
 }
 
-/*if($_POST['dept']){
-	$dept = mysqli_real_escape_string($link, $_POST['dept']);
-	$sql[] = "dept = '$dept'";
+if($_POST['dept']){
+	$dept = intval($_POST['dept']);
+	$sql[] = "department_id = $dept";
 }
 
-if($_POST['group'] != ''){
+
+if($_POST['group']){
 	$group = intval($_POST['group']);
-	$sql[] = "group_num = $group";
-}*/
+	$sql[] = "group_id = $group";
+}
 
-if($_POST['page']){
+if(isset($_POST['page'])){
 	$curr_page = intval($_POST['page']);
 	$offset = ($curr_page - 1) * $num_per_page;
 } else {
@@ -33,15 +35,14 @@ if($_POST['page']){
 	$offset = 0;
 }
 
-$query = "SELECT first_name, last_name, email, phone, office, mailbox FROM people JOIN work_info ON people.id = work_info.id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
+    $query .= " ORDER BY last_name, first_name";
+    $rows = db_select($query);
 }
 
-$query .= " ORDER BY last_name, first_name";
-
-$rows = db_select($query);
 
 //echo '<pre>'.$query.'</pre>';
 
@@ -55,51 +56,50 @@ if($rows){
 ?>
 		<div class="col-xs-12 col-sm-6">
 	        <div class="panel panel-primary">
-	          <div class="panel-heading">
-	            <h3 class="panel-title"><?php echo $rows[$i]['first_name'] . ' ' . $rows[$i]['last_name']; ?></h3>
-	          </div>
+                <div class="panel-heading"><h3 class="panel-title"><?php echo $rows[$i]['first_name'] . ' ' . $rows[$i]['last_name']; ?></h3></div>
 	
-	          <div class="panel-body">
-	            <div class="row">
-	              <div class="col-xs-4 col-xs-offset-4 col-md-3 col-md-offset-0"><img class="img-responsive img-rounded" src="icons/soldier76.png"></div>
-	
-	              <div class="col-xs-12 col-sm-9" style="min-height: 100px;">
-	                <div class="work">
-	                  <ul class="list-unstyled" style="margin-bottom: 0;">
-	                    <li class="row"><label class="col-xs-3 control-label text-right">Office:</label><span class="col-xs-9"><?php echo $rows[$i]['office']; ?></span></li>
-	
-	                    <li class="row"><label class="col-xs-3 control-label text-right">Mailbox:</label><span class="col-xs-9"><?php echo $rows[$i]['mailbox']; ?></span></li>
-	
-	                    <li class="row"><label class="col-xs-3 control-label text-right">Phone:</label><span class="col-xs-9">(555) <?php echo substr($rows[$i]['phone'],0,3). '-' . substr($rows[$i]['phone'],3); ?></span></li>
-	
-	                    <li class="row"><label class="col-xs-3 control-label text-right">Email:</label><a href="mailto:" class="col-xs-9"><?php echo $rows[$i]['email'];?></a></li>
-	                  </ul>
-	                </div>
-	
-	                <div class="home" style="display:none;">
-	                  <p>Home info loads here</p>
-	                </div>
-	
-	                <div class="emergency" style="display:none;">
-	                  <p>Emergency info loads here</p>
-	                </div>
-	              </div>
-	            </div>
-	
-	            <div class="text-center">
-	              <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
-	                <label class="btn btn-primary active"><input name="options-1" type="radio" value="work" checked> <span>Work</span></label>
-	                <label class="btn btn-primary"><input name="options-1" type="radio" value="home"> <span>Home</span></label>
-	                <label class="btn btn-danger"><input name="options-1" type="radio" value="emergency"> <span class="hidden-xs">Emergency</span></label>
-	              </div>
-	            </div>
-	          </div>
-	
-	          <div class="panel-footer">
-	            <span class="label label-primary">Staff</span>
-	          </div>
-	        </div>
-      </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4 col-md-3 col-md-offset-0"><img class="img-responsive img-rounded" src="icons/soldier76.png"></div>
+    
+                        <div class="col-xs-12 col-sm-9" style="min-height: 100px;">
+                            <div class="work">
+                                <ul class="list-unstyled" style="margin-bottom: 0;">
+                                    <li class="row"><label class="col-xs-3 control-label text-right">Office:</label><span class="col-xs-9"><?php echo $rows[$i]['office']; ?></span></li>
+                                    <li class="row"><label class="col-xs-3 control-label text-right">Mailbox:</label><span class="col-xs-9"><?php echo $rows[$i]['mailbox']; ?></span></li>
+                                    <li class="row"><label class="col-xs-3 control-label text-right">Phone:</label><a href="tel:1-555-555-5555" class="col-xs-9">(555) <?php echo substr($rows[$i]['phone'],0,3). '-' . substr($rows[$i]['phone'],3); ?></a></li>
+                                    <li class="row"><label class="col-xs-3 control-label text-right">Email:</label><a href="mailto:" class="col-xs-9"><?php echo $rows[$i]['email'];?></a></li>
+                                </ul>
+                            </div>
+        
+                            <div class="home" style="display:none;">
+                                <p>Home info loads here</p>
+                            </div>
+        
+                            <div class="emergency" style="display:none;">
+                                <p>Emergency info loads here</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
+                            <label class="btn btn-primary active"><input name="options-1" type="radio" value="work" checked> <span>Work</span></label>
+                            <label class="btn btn-primary"><input name="options-1" type="radio" value="home"> <span>Home</span></label>
+                            <label class="btn btn-danger"><input name="options-1" type="radio" value="emergency"> <span class="hidden-xs">Emergency</span></label>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="panel-footer">
+                    <?php 
+                        $dept_rows = in_department($rows[$i]['id']);
+                        foreach($dept_rows as $dept_row):
+                    ?>
+                    <span class="label label-primary"><?php echo ucwords($dept_row['name']); ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
       
       
 <?php	

@@ -1,3 +1,4 @@
+<?php require('functions.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +54,7 @@
     
     //Get results
     function search() {
-	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val()});
+	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': 1});
     }
     
   </script>
@@ -70,7 +71,7 @@
 
           <div class="col-sm-9">
             <div class="input-group">
-              <input type="search" class="form-control" id="search" placeholder="Search for...">
+              <input type="search" class="form-control" id="search">
               <span class="input-group-btn">
                 <button class="btn btn-primary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
               </span>
@@ -82,12 +83,12 @@
           <label class="control-label col-sm-2" for="dept">Department:</label>
 
           <div class="col-sm-9">
-            <select class="form-control" id="dept">
+          	<select class="form-control" id="dept">
               <option value=''>All Departments</option>
-              <option value='offense'>Offense</option>
-              <option value='defense'>Defense</option>
-              <option value='tank'>Tank</option>
-              <option value='support'>Support</option>
+			  <?php $rows = get_departments(); 
+					foreach($rows as $row): ?>
+	          <option value="<?php echo $row['id']; ?>"><?php echo ucwords($row['name']); ?></option>
+			  <?php endforeach; ?>
             </select>
           </div>
         </div>
@@ -97,8 +98,8 @@
 
           <div class="col-sm-10">
             <label class="radio-inline"><input type="radio" name="group" value="" checked="checked">All Matches</label>
-            <label class="radio-inline"><input type="radio" name="group" value="1">Original Members</label>
-            <label class="radio-inline"><input type="radio" name="group" value="0">Non-Members</label>
+            <label class="radio-inline"><input type="radio" name="group" value="1">Employees</label>
+            <label class="radio-inline"><input type="radio" name="group" value="2">Students</label>
           </div>
         </div>
       </form>
