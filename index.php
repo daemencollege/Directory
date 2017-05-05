@@ -54,6 +54,11 @@
 	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
       });
       
+      $('#modal-info').on('show.bs.modal', function(){
+          var person_id = $(event.target).closest('button').data('id');
+          $(this).load('ajax/load-info.php', {'person_id': person_id});
+      });
+      
     });
     
     //Get results
@@ -91,7 +96,7 @@
               <option value=''>All Departments</option>
 			  <?php $rows = get_departments(); 
 					foreach($rows as $row): ?>
-	          <option value="<?php echo $row['id']; ?>"><?php echo ucwords($row['name']); ?></option>
+	          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
 			  <?php endforeach; ?>
             </select>
           </div>
@@ -110,6 +115,8 @@
     </div>
     
 	<div class="col-sm-12" id="results"></div>
+	
+	<div class="modal" id="modal-info" role="dialog"></div>
 
   </div>
 </body>
