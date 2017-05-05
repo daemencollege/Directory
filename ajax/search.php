@@ -35,7 +35,7 @@ if(isset($_POST['page'])){
 	$offset = 0;
 }
 
-$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, photo, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
@@ -49,7 +49,6 @@ if (!empty($sql)) {
 if($rows){
 	$total_pages = ceil(count($rows) / $num_per_page);
 	$page_end = min($offset + $num_per_page, count($rows));
-	$images = array_diff(scandir('../icons/'), array('..','.'));
 ?>
         <table class="table table-striped">
             <thead>
@@ -65,7 +64,6 @@ if($rows){
             <tbody>   
 <?php
 	for($i = $offset; $i < $page_end; $i++):
-	    $image = $images[array_rand($images)];
 	    $dept_rows = in_departments($rows[$i]['id']);
 	    $dept_names = array();
         foreach($dept_rows as $dept_row){
@@ -74,7 +72,7 @@ if($rows){
         $dept_names = implode(', ', $dept_names);
 ?>
                 <tr>
-                    <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$image; ?>"></td>
+                    <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$rows[$i]['photo'].'.png'; ?>"></td>
                     <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?></td>
                     <td class="hidden-xs"><a href="mailto:"><?php echo $rows[$i]['email']; ?></a></td>
                     <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></a></td>
