@@ -50,18 +50,18 @@ if($rows){
 	$total_pages = ceil(count($rows) / $num_per_page);
 	$page_end = min($offset + $num_per_page, count($rows));
 ?>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="hidden-xs col-sm-1"></th>
-                    <th class="col-xs-9 col-sm-3 col-md-3">Name</th>
-                    <th class="hidden-xs col-sm-3 col-md-2">Email</th>
-                    <th class="hidden-xs col-sm-3 col-md-2">Phone</th>
-                    <th class="hidden-xs hidden-sm col-md-3">Department</th>
-                    <th class="col-xs-3 col-sm-2 col-md-1"></th>
-                </tr>
-            </thead>
-            <tbody>   
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="hidden-xs col-sm-1"></th>
+                <th class="col-xs-9 col-sm-3 col-md-3">Name</th>
+                <th class="hidden-xs col-sm-3 col-md-2">Email</th>
+                <th class="hidden-xs col-sm-3 col-md-2">Phone</th>
+                <th class="hidden-xs hidden-sm col-md-3">Department</th>
+                <th class="col-xs-3 col-sm-2 col-md-1"></th>
+            </tr>
+        </thead>
+        <tbody>   
 <?php
 	for($i = $offset; $i < $page_end; $i++):
 	    $dept_rows = in_departments($rows[$i]['id']);
@@ -71,19 +71,36 @@ if($rows){
         }
         $dept_names = implode(', ', $dept_names);
 ?>
-                <tr>
-                    <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$rows[$i]['photo'].'.png'; ?>"></td>
-                    <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?><br><em><?php echo $rows[$i]['title']; ?></em></td>
-                    <td class="hidden-xs"><a href="mailto:"><?php echo $rows[$i]['email']; ?></a></td>
-                    <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></a></td>
-                    <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
-                    <td><button type="button" class="btn btn-primary btn-sm">View</button></td>
-                </tr>
+            <tr>
+                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$rows[$i]['photo'].'.png'; ?>"></td>
+                <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?><br><em><?php echo $rows[$i]['title']; ?></em></td>
+                <td class="hidden-xs"><a href="mailto:"><?php echo $rows[$i]['email']; ?></a></td>
+                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></a></td>
+                <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-test">View</button></td>
+            </tr>
 <?php
     endfor;
 ?>
-            </tbody>
-        </table>
+        </tbody>
+    </table>
+    
+    <div class="modal fade" id="modal-test" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Text goes here</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+	
 	<nav class="col-sm-offset-3 col-sm-6 text-center">
 		<ul class="pagination">
 			<?php if($curr_page > 1): ?>
