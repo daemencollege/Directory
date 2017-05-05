@@ -1,5 +1,5 @@
 <?php
-require 'connect.php';
+require '../connect.php';
 
 function gen_photo(){
 	$photos = array('ana','bastion','dva','genji','hanzo','junkrat','lucio','mccree','mei','mercy','pharah','reaper','reinhardt','roadhog','soldier76','sombra','symmetra','torbjorn','tracer','widowmaker','winston','zarya','zenyatta');

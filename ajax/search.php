@@ -35,7 +35,7 @@ if(isset($_POST['page'])){
 	$offset = 0;
 }
 
-$query = "SELECT DISTINCT people.id, first_name, last_name, photo, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, photo, title, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
@@ -73,7 +73,7 @@ if($rows){
 ?>
                 <tr>
                     <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$rows[$i]['photo'].'.png'; ?>"></td>
-                    <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?></td>
+                    <td><?php echo $rows[$i]['first_name'].' '.$rows[$i]['last_name']; ?><br><em><?php echo $rows[$i]['title']; ?></em></td>
                     <td class="hidden-xs"><a href="mailto:"><?php echo $rows[$i]['email']; ?></a></td>
                     <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($rows[$i]['phone'],0,3) . '-' . substr($rows[$i]['phone'],3); ?></a></td>
                     <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>

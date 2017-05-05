@@ -1,5 +1,5 @@
 <?php
-require 'connect.php';
+require '../connect.php';
 
 function gen_department(){
 	$department = array(1,2,3,4,5,6);

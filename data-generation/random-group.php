@@ -1,5 +1,5 @@
 <?php
-require 'connect.php';
+require '../connect.php';
 
 function gen_group(){
 	$group = array(1,2);

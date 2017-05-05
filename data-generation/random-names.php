@@ -1,5 +1,5 @@
 <?php
-require 'connect.php';
+require '../connect.php';
 
 function gen_name(){
 	$first = array('Marx','Gala','Rosamaria','Wendi','Lura','Jenna','Rocky','Armando','Misty','Brock','India','Olivia','Solange','Wilfred','Emanuel','Audrea','Sal','George','Antwan','Jada','Sophie','Zachery','Ashley','Jazmyn','Prince','Skyler','Ingrid','Oswaldo','Donovan','Shalya','Sean','Leroy','Pierce','Anabelle','Adam','Jack','Cooper','Faith','Rush','Jude','Perri','Erica','Scott','Chris','Kelly','Darlene','Tom','Justin','Valerie','Dixie','Jordan','Brittany','Emily','Pablo','Thaddeus','Quinn','Evan','Jessica','Griffin','Leonardo','Summer','Elvis','Kobe','Itzel','Roman');
