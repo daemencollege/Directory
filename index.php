@@ -56,7 +56,7 @@
       
       $('#modal-info').on('show.bs.modal', function(){
           var person_id = $(event.target).closest('button').data('id');
-          $(this).load('ajax/load-info.php', {'person_id': person_id});
+          $('.modal-content').load('ajax/load-info.php', {'person_id': person_id});
       });
       
     });
@@ -116,7 +116,11 @@
     
 	<div class="col-sm-12" id="results"></div>
 	
-	<div class="modal" id="modal-info" role="dialog"></div>
+	<div class="modal" id="modal-info" role="dialog">
+    	<div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+	</div>
 
   </div>
 </body>
