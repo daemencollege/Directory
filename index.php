@@ -59,6 +59,10 @@
           $('.modal-content').load('ajax/load-info.php', {'person_id': person_id});
       });
       
+      $('#modal-info').on('hidden.bs.modal', function(){
+          $('.modal-content').empty();
+      });
+      
     });
     
     //Get results
