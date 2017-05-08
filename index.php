@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <style>
+      html {
+          overflow-y: scroll;
+      }
       .table>tbody>tr>td {
           vertical-align: middle;
       }
@@ -54,13 +57,8 @@
 	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
       });
       
-      $('#modal-info').on('show.bs.modal', function(){
-          var person_id = $(event.target).closest('button').data('id');
-          $('.modal-content').load('ajax/load-info.php', {'person_id': person_id});
-      });
-      
-      $('#modal-info').on('hidden.bs.modal', function(){
-          $('.modal-content').empty();
+      $(document).on('click', 'td button', function(){
+         $(this).closest('tr').next('tr').toggle();
       });
       
     });

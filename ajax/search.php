@@ -56,7 +56,7 @@ if($rows){
 	$total_pages = ceil($count / $num_per_page);
 	$page_end = min($offset + $num_per_page, $count);
 ?>
-    <table class="table table-striped">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th class="hidden-xs col-sm-1"></th>
@@ -81,10 +81,25 @@ if($rows){
             <tr>
                 <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
-                <td class="hidden-xs"><a href="mailto:"><?php echo $row['email']; ?></a></td>
+                <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($row['phone'],0,3) . '-' . substr($row['phone'],3); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>" data-toggle="modal" data-target="#modal-info">View</button></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
+            </tr>
+            <tr style="display: none;">
+                <td colspan="6">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <h5>Work Info</h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <h5>Home Info</h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <h5 class="text-danger">Emergency Info</h5>
+                        </div>
+                    </div>
+                </td>
             </tr>
             
 <?php
@@ -96,7 +111,16 @@ if($rows){
                 <td class="hidden-xs"><a href="mailto:"><?php echo $row['email']; ?></a></td>
                 <td class="hidden-xs"></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>" data-toggle="modal" data-target="#modal-info">View</button></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
+            </tr>
+            <tr style="display: none;">
+                <td colspan="6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h5>Student Info</h5>
+                        </div>
+                    </div>
+                </td>
             </tr>
 <?php
         endif;
