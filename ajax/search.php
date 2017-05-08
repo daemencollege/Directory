@@ -91,6 +91,12 @@ if($rows){
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">
                             <h5>Work Info</h5>
+                            <ul class="list-unstyled" style="margin-bottom: 0;">
+                                <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555">(555) <?php echo substr($row['phone'],0,3). '-' . substr($row['phone'],3); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $row['office']; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $row['mailbox']; ?></span></li>
+                            </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <h5>Home Info</h5>
