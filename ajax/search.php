@@ -56,7 +56,7 @@ if($rows){
 	$total_pages = ceil($count / $num_per_page);
 	$page_end = min($offset + $num_per_page, $count);
 ?>
-    <table class="table table-hover">
+    <table class="table">
         <thead>
             <tr>
                 <th class="hidden-xs col-sm-1"></th>
@@ -82,27 +82,37 @@ if($rows){
                 <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
                 <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
-                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo '(555) ' . substr($row['phone'],0,3) . '-' . substr($row['phone'],3); ?></a></td>
+                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
                 <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
             </tr>
-            <tr style="display: none;">
+            <tr class="row-details hidden">
                 <td colspan="6">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">
                             <h5>Work Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
                                 <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555">(555) <?php echo substr($row['phone'],0,3). '-' . substr($row['phone'],3); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $row['office']; ?></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $row['mailbox']; ?></span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
-                            <h5>Home Info</h5>
+                            <h5>Additional Info</h5>
+                            <ul class="list-unstyled" style="margin-bottom: 0;">
+                                <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $row['office']; ?><br>Amherst, NY 14226</span></li>
+                            </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <h5 class="text-danger">Emergency Info</h5>
+                            <ul class="list-unstyled" style="margin-bottom: 0;">
+                                <li class="row"><label class="col-xs-4 control-label">Name:</label><span class="col-xs-8"><?php echo $row['first_name'].' '.$row['last_name']; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Relation:</label><span class="col-xs-8">Myself</span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
+                            </ul>
                         </div>
                     </div>
                 </td>

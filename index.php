@@ -10,6 +10,11 @@
       html {
           overflow-y: scroll;
       }
+      
+      .row-details {
+          background: #f5f5f5;
+      }
+      
       .table>tbody>tr>td {
           vertical-align: middle;
       }
@@ -58,7 +63,7 @@
       });
       
       $(document).on('click', 'td button', function(){
-         $(this).closest('tr').next('tr').toggle();
+         $(this).closest('tr').next('tr').toggleClass('hidden');
       });
       
     });
