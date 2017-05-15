@@ -1,5 +1,5 @@
 <?php
-class Db {
+class Database {
     // The database connection
     protected static $connection;
 
@@ -32,10 +32,10 @@ class Db {
      */
     public function query($query) {
         // Connect to the database
-        $connection = $this -> connect();
+        $connection = $this->connect();
 
         // Query the database
-        $result = $connection -> query($query);
+        $result = $connection->query($query);
 
         return $result;
     }
@@ -47,15 +47,18 @@ class Db {
      * @return bool False on failure / array Database rows on success
      */
     public function select($query) {
-        $rows = array();
-        $result = $this -> query($query);
+        $res = $this->query($query);
         if($result === false) {
             return false;
         }
-        while ($row = $result -> fetch_assoc()) {
-            $rows[] = $row;
+        while ($row = $res->fetch_assoc()) {
+            $result = new QueryResult();
+            foreach ($row as $k => $v) {
+                $result->$k = $v;
+            }
+            $results[] = $result;
         }
-        return $rows;
+        return $results;
     }
 
     /**
@@ -64,8 +67,8 @@ class Db {
      * @return string Database error message
      */
     public function error() {
-        $connection = $this -> connect();
-        return $connection -> error;
+        $connection = $this->connect();
+        return $connection->error;
     }
 
     /**
@@ -75,24 +78,49 @@ class Db {
      * @return string The quoted and escaped string
      */
     public function quote($value) {
-        $connection = $this -> connect();
-        return "'" . $connection -> real_escape_string($value) . "'";
+        $connection = $this->connect();
+        return "'" . $connection->real_escape_string($value) . "'";
     }
 
 }
+
+class QueryResult {
+    
+    private $results = array();
+    
+    public function __construct () 
+    {
+    }
+    
+    public function __set ($var, $val)
+    {
+        $this->results[$var] = $val;
+    }
+    
+    public function __get($var)
+    {
+        if (isset($this->results[$var]) {
+            return $this->results[$var];
+        } else {
+            return null;
+        }
+    }
+}
+
 
 class Person {
     
     protected $id;
     protected $first_name;
     protected $last_name;
-    protected $email;
+    //protected $email;
     
     function __construct($id, $first_name, $last_name)
     {
         $this->id = $id;
         $this->first_name = $first_name;
         $this->last_name = $last_name;
+        //$this->email = $email;
     }
     
     protected function get_id()
@@ -115,14 +143,55 @@ class Person {
         return $this->first_name . ' ' . $this->last_name;
     }
     
-    protected function get_email()
+    /*protected function get_email()
     {
         return $this->email;
-    }
+    }*/
 
 } //End of class Person
 
 class Employee extends Person {
-    protected $
+    
+    protected $email;
+    protected $phone;
+    protected $building;
+    protected $room;
+    
+    function __construct($id, $first_name, $last_name, $email, $phone, $building, $room)
+    {
+        parent::__construct($id, $first_name, $last_name);
+        $this->email = $email;
+        $this->phone = $phone;
+        $this->building = $building;
+        $this->room = $room;
+    }
+    
+    protected function get_email()
+    {
+        return $this->email;
+    }
+    
+    protected function get_phone()
+    {
+        return $this->phone;
+    }
+    
+    protected function get_building()
+    {
+        return $this->building;
+    }
+    
+    protected function get_room()
+    {
+        return $this->room;
+    }
+    
+    protected function get_departments()
+    {
+        $db = new Database();
+		$query = "SELECT name FROM departments JOIN in_department ON id = department_id WHERE person_id = {$this->id} ORDER BY name";
+		$rows = $db->select($query);
+		return $rows;
+    }
 } //End of class Employee
 ?>
