@@ -1,18 +1,21 @@
 <?php
-require('../functions.php');	
+require_once('functions.php');
+require_once('classes/autoloader.php');
 
-$link = db_connect();
+spl_autoload_register('Autoloader::loader');
+    
+$db = new Database();
 
 //Variables
 $num_per_page = 10;
 $adjacents = 2;
-$rows = "";
+$results = "";
 
 $search = trim($_POST['search']);
 
 if($search){
 	$search = preg_replace('/\s+/', '|', $search);
-	$search = db_quote($search);
+	$search = $db->quote($search);
 	$sql[] = "(last_name REGEXP $search OR first_name REGEXP $search OR email REGEXP $search OR phone REGEXP $search)";
 }
 
@@ -39,20 +42,20 @@ if(isset($_POST['page'])){
 if (!empty($sql)) {
     $count_query = "SELECT COUNT(DISTINCT people.id) as count FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
     $count_query .= ' WHERE ' . implode(' AND ', $sql);
-    $count = db_select($count_query);
-    $count = $count[0]['count'];
+    $count = $db->select($count_query);
+    $count = $count[0]->count;
     
     $query = "SELECT DISTINCT people.id, first_name, last_name, photo, title, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
     $query .= ' WHERE ' . implode(' AND ', $sql);
     $query .= " ORDER BY last_name, first_name LIMIT $offset, $num_per_page";
-    $rows = db_select($query);
+    $results = $db->select($query);
 }
 
 
 //echo '<pre>'.$query.'</pre>';
 //var_dump($count);
 
-if($rows){
+if ($results) {
 	$total_pages = ceil($count / $num_per_page);
 	$page_end = min($offset + $num_per_page, $count);
 ?>
@@ -69,22 +72,22 @@ if($rows){
         </thead>
         <tbody>   
 <?php
-	foreach($rows as $row):
-	    $dept_rows = in_departments($row['id']);
+	foreach ($results as $result) :
+	    /*$dept_rows = in_departments($row['id']);
 	    $dept_names = array();
         foreach($dept_rows as $dept_row){
             $dept_names[] = $dept_row['name'];
         }
-        $dept_names = implode(', ', $dept_names);
-        if($row['group_id'] == 1):
+        $dept_names = implode(', ', $dept_names);*/
+        if ($result->group_id == 1) :
 ?>
             <tr>
-                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
-                <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
-                <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
-                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
-                <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
+                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$result->photo.'.png'; ?>"></td>
+                <td><?php echo $result->first_name.' '.$result->last_name; ?><br><em><?php echo $result->title; ?></em></td>
+                <td class="hidden-xs"><a href="mailto:<?php echo $result->email; ?>"><?php echo $result->email; ?></a></td>
+                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></td>
+                <td class="hidden-xs hidden-sm"><?php echo 'Hold on';//$dept_names; ?></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $result->id; ?>">View</button></td>
             </tr>
             <tr class="row-details hidden">
                 <td colspan="6">
@@ -92,26 +95,26 @@ if($rows){
                         <div class="col-xs-12 col-sm-4">
                             <h5>Work Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $row['office']; ?></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $row['mailbox']; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $result->email;?>"><?php echo $result->email;?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $result->office; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $result->mailbox; ?></span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <h5>Additional Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $row['office']; ?><br>Amherst, NY 14226</span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $result->email;?>"><?php echo $result->email;?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $result->office; ?><br>Amherst, NY 14226</span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <h5 class="text-danger">Emergency Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Name:</label><span class="col-xs-8"><?php echo $row['first_name'].' '.$row['last_name']; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Name:</label><span class="col-xs-8"><?php echo $result->first_name.' '.$result->last_name; ?></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Relation:</label><span class="col-xs-8">Myself</span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></span></li>
                             </ul>
                         </div>
                     </div>
@@ -122,12 +125,12 @@ if($rows){
         else:
 ?>
             <tr>
-                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
-                <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
-                <td class="hidden-xs"><a href="mailto:"><?php echo $row['email']; ?></a></td>
+                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$result->photo.'.png'; ?>"></td>
+                <td><?php echo $result->first_name.' '.$result->last_name; ?><br><em><?php echo $result->title; ?></em></td>
+                <td class="hidden-xs"><a href="mailto:"><?php echo $result->email; ?></a></td>
                 <td class="hidden-xs"></td>
-                <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
+                <td class="hidden-xs hidden-sm"><?php echo 'Hold on'; ?></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $result->id; ?>">View</button></td>
             </tr>
             <tr style="display: none;">
                 <td colspan="6">

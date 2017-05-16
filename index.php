@@ -1,4 +1,10 @@
-<?php require('functions.php'); ?>
+<?php 
+    require_once('classes/autoloader.php');
+    
+    spl_autoload_register('Autoloader::loader');
+    
+    $db = new Database();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +15,10 @@
   <style>
       html {
           overflow-y: scroll;
+      }
+      
+      .pagination>li>span {
+          cursor: default;
       }
       
       .row-details {
@@ -59,7 +69,7 @@
       $(document).on('click', 'li a', function(e) {
 	      e.preventDefault();
 	      var page = $(this).attr('data-page');
-	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
+	      $('#results').load('search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
       });
       
       $(document).on('click', 'td button', function(){
@@ -70,7 +80,7 @@
     
     //Get results
     function search() {
-	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': 1});
+	    $('#results').load('search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': 1});
     }
     
   </script>
@@ -101,9 +111,9 @@
           <div class="col-sm-9">
           	<select class="form-control" id="dept">
               <option value=''>All Departments</option>
-			  <?php $rows = get_departments(); 
-					foreach($rows as $row): ?>
-	          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+			  <?php $results = $db->select("SELECT * FROM departments");
+					foreach($results as $result): ?>
+	          <option value="<?php echo $result->id; ?>"><?php echo $result->name; ?></option>
 			  <?php endforeach; ?>
             </select>
           </div>

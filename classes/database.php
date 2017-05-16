@@ -47,8 +47,9 @@ class Database {
      * @return bool False on failure / array Database rows on success
      */
     public function select($query) {
+        $results = array();
         $res = $this->query($query);
-        if($result === false) {
+        if($res === false) {
             return false;
         }
         while ($row = $res->fetch_assoc()) {
@@ -83,115 +84,4 @@ class Database {
     }
 
 }
-
-class QueryResult {
-    
-    private $results = array();
-    
-    public function __construct () 
-    {
-    }
-    
-    public function __set ($var, $val)
-    {
-        $this->results[$var] = $val;
-    }
-    
-    public function __get($var)
-    {
-        if (isset($this->results[$var]) {
-            return $this->results[$var];
-        } else {
-            return null;
-        }
-    }
-}
-
-
-class Person {
-    
-    protected $id;
-    protected $first_name;
-    protected $last_name;
-    //protected $email;
-    
-    function __construct($id, $first_name, $last_name)
-    {
-        $this->id = $id;
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
-        //$this->email = $email;
-    }
-    
-    protected function get_id()
-    {
-        return $this->id;
-    }
-    
-    protected function get_first_name()
-    {
-        return $this->first_name;    
-    }
-    
-    protected function get_last_name()
-    {
-        return $this->last_name;
-    }
-    
-    protected function get_full_name()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-    
-    /*protected function get_email()
-    {
-        return $this->email;
-    }*/
-
-} //End of class Person
-
-class Employee extends Person {
-    
-    protected $email;
-    protected $phone;
-    protected $building;
-    protected $room;
-    
-    function __construct($id, $first_name, $last_name, $email, $phone, $building, $room)
-    {
-        parent::__construct($id, $first_name, $last_name);
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->building = $building;
-        $this->room = $room;
-    }
-    
-    protected function get_email()
-    {
-        return $this->email;
-    }
-    
-    protected function get_phone()
-    {
-        return $this->phone;
-    }
-    
-    protected function get_building()
-    {
-        return $this->building;
-    }
-    
-    protected function get_room()
-    {
-        return $this->room;
-    }
-    
-    protected function get_departments()
-    {
-        $db = new Database();
-		$query = "SELECT name FROM departments JOIN in_department ON id = department_id WHERE person_id = {$this->id} ORDER BY name";
-		$rows = $db->select($query);
-		return $rows;
-    }
-} //End of class Employee
 ?>
