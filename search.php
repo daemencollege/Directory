@@ -1,10 +1,9 @@
 <?php
-require_once('functions.php');
-require_once('classes/autoloader.php');
+include('classes/autoloader.php');
 
 spl_autoload_register('Autoloader::loader');
     
-$db = new Database();
+$db = new Database;
 
 //Variables
 $num_per_page = 10;
@@ -45,9 +44,9 @@ if (!empty($sql)) {
     $count = $db->select($count_query);
     $count = $count[0]->count;
     
-    $query = "SELECT DISTINCT people.id, first_name, last_name, photo, title, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+    $query = "SELECT DISTINCT people.id as id, first_name as firstName, last_name as lastName, photo, title, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
     $query .= ' WHERE ' . implode(' AND ', $sql);
-    $query .= " ORDER BY last_name, first_name LIMIT $offset, $num_per_page";
+    $query .= " ORDER BY lastName, firstName LIMIT $offset, $num_per_page";
     $results = $db->select($query);
 }
 
@@ -80,14 +79,15 @@ if ($results) {
         }
         $dept_names = implode(', ', $dept_names);*/
         if ($result->group_id == 1) :
+        $result = new Employee($result);
 ?>
             <tr>
-                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$result->photo.'.png'; ?>"></td>
-                <td><?php echo $result->first_name.' '.$result->last_name; ?><br><em><?php echo $result->title; ?></em></td>
-                <td class="hidden-xs"><a href="mailto:<?php echo $result->email; ?>"><?php echo $result->email; ?></a></td>
-                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></td>
-                <td class="hidden-xs hidden-sm"><?php echo 'Hold on';//$dept_names; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $result->id; ?>">View</button></td>
+                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$result->getPhoto().'.png'; ?>"></td>
+                <td><?php echo $result->getFullName(); ?><br><em><?php echo $result->getTitle(); ?></em></td>
+                <td class="hidden-xs"><?php $result->printEmailAsLink(); ?></td>
+                <td class="hidden-xs"><?php $result->printPhoneAsLink(); ?></td>
+                <td class="hidden-xs hidden-sm"><?php echo $result->getDepartments(); ?></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $result->getId(); ?>">View</button></td>
             </tr>
             <tr class="row-details hidden">
                 <td colspan="6">
@@ -95,26 +95,26 @@ if ($results) {
                         <div class="col-xs-12 col-sm-4">
                             <h5>Work Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $result->email;?>"><?php echo $result->email;?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $result->office; ?></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $result->mailbox; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><?php $result->printEmailAsLink(); ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><?php $result->printPhoneAsLink(); ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $result->getOffice(); ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $result->getMailbox(); ?></span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <h5>Additional Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $result->email;?>"><?php echo $result->email;?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $result->office; ?><br>Amherst, NY 14226</span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><?php $result->printEmailAsLink(); ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><?php $result->printPhoneAsLink(); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $result->getOffice(); ?><br>Amherst, NY 14226</span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
                             <h5 class="text-danger">Emergency Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Name:</label><span class="col-xs-8"><?php echo $result->first_name.' '.$result->last_name; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Name:</label><span class="col-xs-8"><?php echo $result->getFullName(); ?></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Relation:</label><span class="col-xs-8">Myself</span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($result->phone); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><?php $result->printPhoneAsLink(); ?></span></li>
                             </ul>
                         </div>
                     </div>
@@ -123,6 +123,7 @@ if ($results) {
             
 <?php
         else:
+        $result = new Student($result);
 ?>
             <tr>
                 <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$result->photo.'.png'; ?>"></td>

@@ -7,12 +7,12 @@ class QueryResult {
     {
     }
     
-    public function set($var, $val)
+    public function __set($var, $val)
     {
         $this->results[$var] = $val;
     }
     
-    public function get($var)
+    public function __get($var)
     {
         if (isset($this->results[$var])) {
             return $this->results[$var];

@@ -3,7 +3,7 @@
     
     spl_autoload_register('Autoloader::loader');
     
-    $db = new Database();
+    $db = new Database;
 ?>
 <!DOCTYPE html>
 <html>
