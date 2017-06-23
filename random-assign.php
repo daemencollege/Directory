@@ -17,4 +17,3 @@ for($i = 1; $i <= 200; $i++) {
 	
 	mysqli_query($link, $insert) or die(mysqli_error($link));
 }
-	
