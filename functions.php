@@ -15,4 +15,8 @@
     	return $rows;
 	}
 	
+	function show_world(){
+		print "Hello World!";
+		return TRUE;
+	}
 ?>
