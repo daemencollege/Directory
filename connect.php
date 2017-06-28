@@ -4,13 +4,13 @@ function db_connect() {
 	static $link;
 	
 	if(!isset($link)) {
-		$user = 'root';
-		$password = 'root';
+		$user = 'directory_user';
+		$password = 'password';
 		$db = 'directory';
 		$host = 'localhost';
 		$port = 8889;
 		
-		$link = mysqli_connect("$host:$port", $user, $password, $db);
+		$link = mysqli_connect("localhost", $user, $password, $db);
 	}
 	
 	if($link === false) {

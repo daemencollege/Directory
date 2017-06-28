@@ -35,7 +35,7 @@ if(isset($_POST['page'])){
 	$offset = 0;
 }
 
-$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+$query = "SELECT DISTINCT people.id, first_name, last_name, email, phone, office, mailbox, group_id FROM people JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
 
 if (!empty($sql)) {
     $query .= ' WHERE ' . implode(' AND ', $sql);
@@ -43,7 +43,7 @@ if (!empty($sql)) {
     $rows = db_select($query);
 }
 
-
+print ($query); 
 //echo '<pre>'.$query.'</pre>';
 
 if($rows){
