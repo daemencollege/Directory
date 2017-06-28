@@ -37,12 +37,12 @@ if(isset($_POST['page'])){
 
 
 if (!empty($sql)) {
-    $count_query = "SELECT COUNT(DISTINCT people.id) as count FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+    $count_query = "SELECT COUNT(DISTINCT people.id) as count FROM people JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
     $count_query .= ' WHERE ' . implode(' AND ', $sql);
     $count = db_select($count_query);
     $count = $count[0]['count'];
     
-    $query = "SELECT DISTINCT people.id, first_name, last_name, photo, title, email, phone, office, mailbox, group_id FROM people JOIN work_info ON people.id = work_info.id JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
+    $query = "SELECT DISTINCT people.id, first_name, last_name, photo, title, email, phone, office, mailbox, group_id FROM people JOIN in_department ON people.id = in_department.person_id JOIN in_group ON people.id = in_group.person_id";
     $query .= ' WHERE ' . implode(' AND ', $sql);
     $query .= " ORDER BY last_name, first_name LIMIT $offset, $num_per_page";
     $rows = db_select($query);
