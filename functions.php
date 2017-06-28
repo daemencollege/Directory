@@ -1,6 +1,6 @@
 <?php
 	require('connect.php');
-	
+
 	function get_departments() {
 		$link = db_connect();
 		$query = "SELECT * FROM departments";
