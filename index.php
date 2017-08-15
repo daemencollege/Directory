@@ -1,3 +1,4 @@
+<!-- Testing making commits from Github Desktop-->
 <?php require('functions.php'); ?>
 <!DOCTYPE html>
 <html>
