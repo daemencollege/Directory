@@ -15,7 +15,7 @@
 	
 	function in_departments($person_id){
     	$link = db_connect();
-    	$query = "SELECT name FROM departments JOIN in_department ON id = department_id WHERE person_id = $person_id ORDER BY name";
+    	$query = "SELECT department_name FROM in_department WHERE person_id = $person_id";
     	$rows = db_select($query);
     	return $rows;
 	}

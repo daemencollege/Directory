@@ -72,7 +72,7 @@ if($rows){
 	    $dept_rows = in_departments($row['id']);
 	    $dept_names = array();
         foreach($dept_rows as $dept_row){
-            $dept_names[] = $dept_row['name'];
+            $dept_names[] = $dept_row['department_name'];
         }
         $dept_names = implode(', ', $dept_names);
         if($row['group_id'] == 1):
