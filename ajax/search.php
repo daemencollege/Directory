@@ -53,7 +53,7 @@ if (!empty($sql)) {
     $rows = db_select($query);
 }
 
-echo '<pre>'.$query.'</pre>';
+//echo '<pre>'.$query.'</pre>';
 //var_dump($count);
 
 if($rows){
@@ -64,10 +64,11 @@ if($rows){
         <thead>
             <tr>
                 <th class="hidden-xs col-sm-1"></th>
-                <th class="col-xs-9 col-sm-3 col-md-3">Name/Affiliation</th>
+                <th class="col-xs-9 col-sm-3 col-md-2">Name/Affiliation</th>
                 <th class="hidden-xs col-sm-3 col-md-2">Email</th>
                 <th class="hidden-xs col-sm-3 col-md-2">Phone</th>
-                <th class="hidden-xs hidden-sm col-md-3">Department</th>
+                <th class="hidden-xs hidden-sm col-md-2">Department</th>
+                <th class="hidden-xs hidden-sm col-md-2">Office</th>
                 <th class="col-xs-3 col-sm-2 col-md-1"></th>
             </tr>
         </thead>
@@ -88,18 +89,20 @@ if($rows){
                 <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
+				<td class="hidden-xs hidden-sm"><?php echo $row['office']; ?></td>
                 <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
             </tr>
             <tr class="row-details hidden">
-                <td colspan="6">
+                <td colspan="7">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">
-                            <h5>Work Info</h5>
+                            <h5>Office Hours</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Office:</label><span class="col-xs-8"><?php echo $row['office']; ?></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Mailbox:</label><span class="col-xs-8"><?php echo $row['mailbox']; ?></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Monday:</label><span class="col-xs-8"></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Tuesday:</label><span class="col-xs-8"></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Wednesday:</label><span class="col-xs-8"></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Thursday:</label><span class="col-xs-8"></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Friday:</label><span class="col-xs-8"></span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
@@ -108,6 +111,7 @@ if($rows){
                                 <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $row['office']; ?><br>Amherst, NY 14226</span></li>
+                                <li class = "row"><label class="col-xs-4 control-label">Mailbox:</label><span class = "col-xs-8"><?php echo $row['mailbox']; ?> </span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
@@ -125,16 +129,17 @@ if($rows){
 <?php
         else:
 ?>
-            <tr>
+            <tr class = 'entry'>
                 <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
-                <td class="hidden-xs"><a href="mailto:"><?php echo $row['email']; ?></a></td>
-                <td class="hidden-xs"></td>
+                <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
+                <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
+				<td class="hidden-xs hidden-sm"><?php echo $row['office']; ?></td>
                 <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
             </tr>
             <tr style="display: none;">
-                <td colspan="6">
+                <td colspan="7">
                     <div class="row">
                         <div class="col-xs-12">
                             <h5>Student Info</h5>

@@ -18,6 +18,10 @@
       .table>tbody>tr>td {
           vertical-align: middle;
       }
+      
+      .entry:hover {
+	      background-color: #D3D3D3;
+      }
   </style>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" type="text/javascript"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
@@ -68,17 +72,7 @@
       
        $(document).on('click', '.entry', function(){
          $(this).closest('tr').next('tr').toggleClass('hidden');
-      });
-      
-      $(document).live('click', 'td button', function(ev){
-	      alert('hello');
-         $(this).closest('tr').next('tr').toggleClass('hidden');
-      });
-      
-      
-      
-      
-      
+      });  
     });
     
     //Get results
