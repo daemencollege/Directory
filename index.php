@@ -69,11 +69,11 @@
         }
       });
       
-      	$(document).on('click', 'li a', function(e) {
-	      e.preventDefault();
-	      var page = $(this).attr('data-page');
-	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
-		  });
+      	//$(document).on('click', 'li a', function(e) {
+	      //e.preventDefault();
+	      //var page = $(this).attr('data-page');
+	      //$('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept-admin': $('#dept-admin').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
+		  //});
       
        	$(document).on('click', '.entry', function(){
 	    	$(this).toggleClass("selected");

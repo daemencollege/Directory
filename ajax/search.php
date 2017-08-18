@@ -63,13 +63,13 @@ if($rows){
     <table class="table">
         <thead>
             <tr>
-                <th class="col-sm-1"></th>
-                <th class="col-xs-9 col-sm-3 col-md-2">Name/Affiliation</th>
+                <th class="col-xs-3 col-sm-1"></th>
+                <th class="hidden-xs col-xs-9 col-sm-3 col-md-2">Name/Affiliation</th>
                 <th class="hidden-xs col-sm-3 col-md-2">Email</th>
                 <th class="hidden-xs col-sm-3 col-md-2">Phone</th>
                 <th class="hidden-xs hidden-sm col-md-2">Department</th>
                 <th class="hidden-xs hidden-sm col-md-2">Office</th>
-                <th class="col-xs-3 col-sm-2 col-md-1"></th>
+                <th class="hidden-xs col-xs-3 col-sm-2 col-md-1"></th>
             </tr>
         </thead>
         <tbody>   
@@ -90,7 +90,7 @@ if($rows){
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
 				<td class="hidden-xs hidden-sm"><?php echo $row['office']; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">More Info</button></td>
+                <td><button type="button" class="hidden-xs btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">More Info</button></td>
             </tr>
             <tr class="row-details hidden">
                 <td colspan="7">
@@ -130,7 +130,7 @@ if($rows){
         else:
 ?>
             <tr>
-                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
+                <td><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
                 <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
