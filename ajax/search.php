@@ -82,7 +82,7 @@ if($rows){
         $dept_names = implode(', ', $dept_names);
         if($row['group_id'] == 1):
 ?>
-            <tr>
+            <tr class = "entry">
                 <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
                 <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>

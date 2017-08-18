@@ -66,9 +66,18 @@
 	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
       });
       
-      $(document).on('click', 'td button', function(){
+       $(document).on('click', '.entry', function(){
          $(this).closest('tr').next('tr').toggleClass('hidden');
       });
+      
+      $(document).live('click', 'td button', function(ev){
+	      alert('hello');
+         $(this).closest('tr').next('tr').toggleClass('hidden');
+      });
+      
+      
+      
+      
       
     });
     
