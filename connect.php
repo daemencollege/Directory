@@ -4,8 +4,8 @@ function db_connect() {
 	static $link;
 	
 	if(!isset($link)) {
-		$user = 'directory_user';
-		$password = 'password';
+		$user = 'root';
+		$password = 'root';
 		$db = 'directory';
 		// $host = 'localhost';
 		// $port = 3306;
