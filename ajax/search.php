@@ -21,6 +21,11 @@ if($_POST['dept']){
 	$sql[] = "department_id = $dept";
 }
 
+if($_POST['dept-admin']){
+	$dept_admin = intval($_POST['dept-admin']);
+	$sql[] = "department_id = $dept_admin";
+}
+
 
 if($_POST['group']){
 	$group = intval($_POST['group']);

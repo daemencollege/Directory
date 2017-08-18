@@ -38,6 +38,10 @@
 		  search();
 	  });
 	  
+	  $('#dept-admin').on('change', function(){
+		  search();
+	  });
+	  
 	  $('input[name="group"]:radio').on('change', function(){
 		 search();
 	  });
@@ -59,7 +63,7 @@
       $(document).on('click', 'li a', function(e) {
 	      e.preventDefault();
 	      var page = $(this).attr('data-page');
-	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
+	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
       });
       
       $(document).on('click', 'td button', function(){
@@ -70,7 +74,7 @@
     
     //Get results
     function search() {
-	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': 1});
+	    $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept-admin': $('#dept-admin').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': 1});
     }
     
   </script>
@@ -93,15 +97,26 @@
               </span>
             </div>
           </div>
+          
         </div>
 
         <div class="form-group">
           <label class="control-label col-sm-2" for="dept">Department:</label>
 
-          <div class="col-sm-9">
+          <div class="col-sm-4">
           	<select class="form-control" id="dept">
-              <option value=''>All Departments</option>
-			  <?php $rows = get_departments(); 
+              <option value=''>Academic Department</option>
+			  <?php $rows = get_departments(1); 
+					foreach($rows as $row): ?>
+	          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+			  <?php endforeach; ?>
+            </select>
+          </div>
+          
+          <div class="col-sm-4">
+          	<select class="form-control" id="dept-admin">
+              <option value=''>Administrative Office</option>
+			  <?php $rows = get_departments(2); 
 					foreach($rows as $row): ?>
 	          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
 			  <?php endforeach; ?>

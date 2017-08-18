@@ -1,9 +1,9 @@
 <?php
 	require('connect.php');
 
-	function get_departments() {
+	function get_departments($type) {
 		$link = db_connect();
-		$query = "SELECT * FROM departments";
+		$query = "SELECT * FROM departments WHERE type = $type ORDER BY name";
 		$rows = db_select($query);
 		return $rows;
 	}
