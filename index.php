@@ -24,8 +24,16 @@
       }
       
       .selected {
-	      background-color: #f2ffdb;
+	      background-color: white;
       }
+      
+      .or {
+	      text-align:center;
+	      font-size: 15px;
+	      vertical-align:center;
+	      line-height:30px;
+      }
+      
       
   </style>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" type="text/javascript"></script>
@@ -127,6 +135,10 @@
 			  <?php endforeach; ?>
             </select>
           </div>
+          
+          <span class = "col-xs-1 or">
+	          OR
+          </span>
           
           <div class="col-sm-4">
           	<select class="form-control" id="dept-admin">
