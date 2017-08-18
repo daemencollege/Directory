@@ -63,7 +63,7 @@ if($rows){
     <table class="table">
         <thead>
             <tr>
-                <th class="hidden-xs col-sm-1"></th>
+                <th class="col-sm-1"></th>
                 <th class="col-xs-9 col-sm-3 col-md-2">Name/Affiliation</th>
                 <th class="hidden-xs col-sm-3 col-md-2">Email</th>
                 <th class="hidden-xs col-sm-3 col-md-2">Phone</th>
@@ -84,13 +84,13 @@ if($rows){
         if($row['group_id'] == 1):
 ?>
             <tr class = "entry">
-                <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
+                <td><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
                 <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
 				<td class="hidden-xs hidden-sm"><?php echo $row['office']; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
+                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">More Info</button></td>
             </tr>
             <tr class="row-details hidden">
                 <td colspan="7">
@@ -129,14 +129,14 @@ if($rows){
 <?php
         else:
 ?>
-            <tr class = 'entry'>
+            <tr>
                 <td class="hidden-xs"><img class="img-responsive img-rounded" src="<?php echo 'icons/'.$row['photo'].'.png'; ?>"></td>
                 <td><?php echo $row['first_name'].' '.$row['last_name']; ?><br><em><?php echo $row['title']; ?></em></td>
                 <td class="hidden-xs"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
 				<td class="hidden-xs hidden-sm"><?php echo $row['office']; ?></td>
-                <td><button type="button" class="btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">View</button></td>
+                <td></td>
             </tr>
             <tr style="display: none;">
                 <td colspan="7">

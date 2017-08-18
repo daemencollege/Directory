@@ -22,6 +22,11 @@
       .entry:hover {
 	      background-color: #D3D3D3;
       }
+      
+      .selected {
+	      background-color: #f2ffdb;
+      }
+      
   </style>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" type="text/javascript"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
@@ -64,15 +69,22 @@
         }
       });
       
-      $(document).on('click', 'li a', function(e) {
+      	$(document).on('click', 'li a', function(e) {
 	      e.preventDefault();
 	      var page = $(this).attr('data-page');
 	      $('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept': $('#dept').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
-      });
+		  });
       
-       $(document).on('click', '.entry', function(){
-         $(this).closest('tr').next('tr').toggleClass('hidden');
-      });  
+       	$(document).on('click', '.entry', function(){
+	    	$(this).toggleClass("selected");
+        	$(this).closest('tr').next('tr').toggleClass('hidden');
+      	}); 
+      	
+      	$(document).on('click', '.entry a', function(ev){
+	    	ev.stopPropogation();
+      	});
+      	
+      	
     });
     
     //Get results
