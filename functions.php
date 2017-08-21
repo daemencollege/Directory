@@ -10,6 +10,7 @@
 	
 	function format_phone_number($number) {
     	$number = substr($number,0,3). '-' . substr($number,3);
+    	$number = substr($number,0,7). '-' . substr($number,7);
     	return $number;
 	}
 	

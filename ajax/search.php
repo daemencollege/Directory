@@ -90,28 +90,31 @@ if($rows){
                 <td class="hidden-xs"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></td>
                 <td class="hidden-xs hidden-sm"><?php echo $dept_names; ?></td>
 				<td class="hidden-xs hidden-sm"><?php echo $row['office']; ?></td>
+				<td class = "hidden-sm hidden-md hidden-lg"><a href=<?php echo "tel:".$row['phone'];?>><i class="fa fa-phone" aria-hidden="true"></i></a></td>
+				<td class = "hidden-sm hidden-md hidden-lg"><a href="mailto:<?php echo $row['email'];?>"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></td>
                 <td><button type="button" class="hidden-xs btn btn-primary btn-sm" data-id="<?php echo $row['id']; ?>">More Info</button></td>
             </tr>
             <tr class="row-details hidden">
                 <td colspan="7">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">
-                            <h5>Office Hours</h5>
-                            <ul class="list-unstyled" style="margin-bottom: 0;">
-                                <li class="row"><label class="col-xs-4 control-label">Monday:</label><span class="col-xs-8"></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Tuesday:</label><span class="col-xs-8"></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Wednesday:</label><span class="col-xs-8"></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Thursday:</label><span class="col-xs-8"></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Friday:</label><span class="col-xs-8"></span></li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-4">
-                            <h5>Additional Info</h5>
+                            <h5 class = "text-success">Additional Info</h5>
                             <ul class="list-unstyled" style="margin-bottom: 0;">
                                 <li class="row"><label class="col-xs-4 control-label">Alt Email:</label><span class="col-xs-8"><a href="mailto:<?php echo $row['email'];?>"><?php echo $row['email'];?></a></span></li>
-                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Alt Phone:</label><span class="col-xs-8"><a href=<?php echo "tel:".$row['phone'];?>><?php echo format_phone_number($row['phone']); ?></a></span></li>
                                 <li class="row"><label class="col-xs-4 control-label">Address:</label><span class="col-xs-8"><?php echo $row['office']; ?><br>Amherst, NY 14226</span></li>
                                 <li class = "row"><label class="col-xs-4 control-label">Mailbox:</label><span class = "col-xs-8"><?php echo $row['mailbox']; ?> </span></li>
+                            </ul>
+                        </div>
+                         <div class="col-xs-12 col-sm-4">
+                            <h5 class= "text-success">Office Hours</h5>
+                            <ul class="list-unstyled" style="margin-bottom: 0;">
+                                <li class="row"><label class="col-xs-4 control-label">Monday:</label><span class="col-xs-8">4:00-5:00</span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Tuesday:</label><span class="col-xs-8"></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Wednesday:</label><span class="col-xs-8">3:00-4:00</span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Thursday:</label><span class="col-xs-8"></span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Friday:</label><span class="col-xs-8">12:00-2:30</span></li>
+                                <li class="row"><label class="col-xs-4 control-label">Other:</label><span class="col-xs-8"></span></li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-4">
@@ -122,6 +125,7 @@ if($rows){
                                 <li class="row"><label class="col-xs-4 control-label">Phone:</label><span class="col-xs-8"><a href="tel:1-555-555-5555"><?php echo format_phone_number($row['phone']); ?></a></span></li>
                             </ul>
                         </div>
+                        
                     </div>
                 </td>
             </tr>
