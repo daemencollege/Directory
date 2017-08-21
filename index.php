@@ -36,11 +36,23 @@
       }
       
       .fa-phone, .fa-envelope-o{
-	      font-size: 20px;
+	      font-size: 1.75em;
       }
       
       #edit {
 	      margin-bottom:15px;
+      }
+      
+      #phone, #email {
+	      padding-left: 25px;
+      }
+      
+      #phone {
+	      padding-right: 25px;
+      }
+      
+      .img-responsive {
+	      max-width:100px;
       }
    
   </style>
@@ -184,7 +196,7 @@
     </div>
     
     <div class = "col-sm-12 text-center" id = "edit">
-		<a data-toggle = "modal" data-target="#modal-info">Edit your directory information</a>
+		<a href = "edit.php">Edit your directory information</a>
 	</div>
     
 	<div class="col-sm-12" id="results"></div>
