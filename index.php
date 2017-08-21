@@ -38,6 +38,10 @@
       .fa-phone, .fa-envelope-o{
 	      font-size: 20px;
       }
+      
+      #edit {
+	      margin-bottom:15px;
+      }
    
   </style>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" type="text/javascript"></script>
@@ -88,16 +92,26 @@
 	      //var page = $(this).attr('data-page');
 	      //$('#results').load('ajax/search.php', {'search': $('#search').val(), 'dept': $('#dept').val(), 'dept-admin': $('#dept-admin').val(), 'group': $('input:radio[name="group"]:checked').val(), 'page': page});
 		  //});
-      
+		  
+		//clicking a row toggles active class  
        	$(document).on('click', '.entry', function(){
 	    	$(this).toggleClass("selected");
         	$(this).closest('tr').next('tr').toggleClass('hidden');
       	}); 
       	
+      	//stop row from expanding when email or phone link is clicked
       	$(document).on('click', '.entry a', function(ev){
 	    	ev.stopPropogation();
       	});
       	
+      	$('#modal-info').on('show.bs.modal', function(){
+          var person_id = 1;
+          $('.modal-content').load('ajax/load-info.php', {'person_id': person_id});
+      	});
+      
+	  	$('#modal-info').on('hidden.bs.modal', function(){
+          $('.modal-content').empty();
+      	});
       	
     });
     
@@ -169,6 +183,10 @@
       </form>
     </div>
     
+    <div class = "col-sm-12 text-center" id = "edit">
+		<a data-toggle = "modal" data-target="#modal-info">Edit your directory information</a>
+	</div>
+    
 	<div class="col-sm-12" id="results"></div>
 	
 	<div class="modal" id="modal-info" role="dialog">
@@ -176,7 +194,8 @@
             <div class="modal-content"></div>
         </div>
 	</div>
-
+		
   </div>
+  
 </body>
 </html>
